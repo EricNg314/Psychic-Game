@@ -23,47 +23,63 @@ document.onkeyup = function () {
     var compGuess = potentialGuess[Math.floor(Math.random() * potentialGuess.length)];
     console.log(compGuess); //Display for reference of computer choice.
 
-    //Conditions to check for possible outcomes.
-    if (userGuess === compGuess) { //Checking if user guessed correctly.
-        scoreWin++; //Adding 1 if user is correct.
-        guessesLeft = resetGuesses; //Resetting for correct answer.
-        prevGuesses.length = 0; //Clearing array.
 
-        //Display output to console log for reference.
-        console.log("Wins: " + scoreWin);
-        console.log("Losses: " + scoreLoss);
-        console.log("Guesses Left: " + guessesLeft);
-        console.log("Your guesses so far: " + prevGuesses);
 
-    } else if (guessesLeft === 1) { //Check if user guess lost due to last guess.
-        scoreLoss++; //Adding 1 if user is incorrect.
-        guessesLeft = resetGuesses;
-        prevGuesses.length = 0;
+    if (potentialGuess.indexOf(userGuess) === -1) {//Checking if user input is a letter.
+        //Setting information to be provided to html with id=game.
+        var html = "<p>Guess what letter I'm thinking of</p>" +
+            "<p>Wins: " + scoreWin + "</p>" +
+            "<p>Losses: " + scoreLoss + "</p>" +
+            "<p>Guesses Left: " + guessesLeft + "</p>" +
+            "<p>Your guesses so far: " + prevGuesses + "</p>" +
+            "<br><h4>Your entry is not a letter.</h4>"; //Letting user know input is not a letter
 
-        //Display output to console log for reference.
-        console.log("Wins: " + scoreWin);
-        console.log("Losses: " + scoreLoss);
-        console.log("Guesses Left: " + guessesLeft);
-        console.log("Your guesses so far: " + prevGuesses);
+        document.querySelector('#game').innerHTML = html;
 
     } else {
-        guessesLeft--; //Reduce user's remaining guesses.
-        prevGuesses.push(" " + userGuess); //Adding space for clarity during output.
 
-        //Display output to console log for reference.
-        console.log("Wins: " + scoreWin);
-        console.log("Losses: " + scoreLoss);
-        console.log("Guesses Left: " + guessesLeft);
-        console.log("Your guesses so far: " + prevGuesses);
-    }
+        //Conditions to check for possible outcomes.
+        if (userGuess === compGuess) { //Checking if user guessed correctly.
+            scoreWin++; //Adding 1 if user is correct.
+            guessesLeft = resetGuesses; //Resetting for correct answer.
+            prevGuesses.length = 0; //Clearing array.
 
-    //Setting information to be provided to html with id=game.
-    var html = "<p>Guess what letter I'm thinking of</p>" +
-        "<p>Wins: " + scoreWin + "</p>" +
-        "<p>Losses: " + scoreLoss + "</p>" +
-        "<p>Guesses Left: " + guessesLeft + "</p>" +
-        "<p>Your guesses so far: " + prevGuesses + "</p>";
+            //Display output to console log for reference.
+            console.log("Wins: " + scoreWin);
+            console.log("Losses: " + scoreLoss);
+            console.log("Guesses Left: " + guessesLeft);
+            console.log("Your guesses so far: " + prevGuesses);
 
-    //Set id game to be html variable.
-    document.querySelector('#game').innerHTML = html;
+        } else if (guessesLeft === 1) { //Check if user guess lost due to last guess.
+            scoreLoss++; //Adding 1 if user is incorrect.
+            guessesLeft = resetGuesses;
+            prevGuesses.length = 0;
+
+            //Display output to console log for reference.
+            console.log("Wins: " + scoreWin);
+            console.log("Losses: " + scoreLoss);
+            console.log("Guesses Left: " + guessesLeft);
+            console.log("Your guesses so far: " + prevGuesses);
+
+        } else {
+            guessesLeft--; //Reduce user's remaining guesses.
+            prevGuesses.push(" " + userGuess); //Adding space for clarity during output.
+
+            //Display output to console log for reference.
+            console.log("Wins: " + scoreWin);
+            console.log("Losses: " + scoreLoss);
+            console.log("Guesses Left: " + guessesLeft);
+            console.log("Your guesses so far: " + prevGuesses);
+        }
+
+        //Setting information to be provided to html with id=game.
+        var html = "<p>Guess what letter I'm thinking of</p>" +
+            "<p>Wins: " + scoreWin + "</p>" +
+            "<p>Losses: " + scoreLoss + "</p>" +
+            "<p>Guesses Left: " + guessesLeft + "</p>" +
+            "<p>Your guesses so far: " + prevGuesses + "</p>";
+
+        //Set id game to be html variable.
+        document.querySelector('#game').innerHTML = html;
+    };
 };
