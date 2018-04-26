@@ -14,16 +14,15 @@ var scoreLoss = 0;
 var guessesLeft = resetGuesses; //Setting guesses remaining to initialize with reset.
 var prevGuesses = []; //Creating empty array.
 
+//Setting random computer guess using floor and random(0 to .99) against length.
+var compGuess = potentialGuess[Math.floor(Math.random() * potentialGuess.length)];
+console.log("Computer Guess:" + compGuess); //Display for reference of computer choice.
+
+
 document.onkeyup = function () {
     //Storing user input as "userGuess" and turning it lower case for comparison.
     var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-    console.log(userGuess); //Display for reference of user choice.
-
-    //Setting random computer guess using floor and random(0 to .99) against length.
-    var compGuess = potentialGuess[Math.floor(Math.random() * potentialGuess.length)];
-    console.log(compGuess); //Display for reference of computer choice.
-
-
+    console.log("User Guess: " + userGuess); //Display for reference of user choice.
 
     if (potentialGuess.indexOf(userGuess) !== -1) {//Checking if user input is a letter.
 
@@ -32,18 +31,29 @@ document.onkeyup = function () {
             scoreWin++; //Adding 1 if user is correct.
             guessesLeft = resetGuesses; //Resetting for correct answer.
             prevGuesses.length = 0; //Clearing array.
-
+            outputDisplay()
+            compGuess = potentialGuess[Math.floor(Math.random() * potentialGuess.length)];
+            console.log("Computer Guess:" + compGuess); //Display for reference of computer choice.
         } else if (guessesLeft === 1) { //Check if user guess lost due to last guess.
             scoreLoss++; //Adding 1 if user is incorrect.
             guessesLeft = resetGuesses;
             prevGuesses.length = 0;
-
+            outputDisplay()
+            compGuess = potentialGuess[Math.floor(Math.random() * potentialGuess.length)];
+            console.log("Computer Guess:" + compGuess); //Display for reference of computer choice.
         } else {
+            console.log("Computer Guess:" + compGuess); //Display for reference of computer choice.
             guessesLeft--; //Reduce user's remaining guesses.
             prevGuesses.push(" " + userGuess); //Adding space for clarity during output.
+            outputDisplay()
         }
     }
 
+
+
+}
+
+function outputDisplay(){
     //Display output to console log for reference.
     console.log("Wins: " + scoreWin);
     console.log("Losses: " + scoreLoss);
@@ -57,12 +67,6 @@ document.onkeyup = function () {
         "<p>Guesses Left: " + guessesLeft + "</p>" +
         "<p>Your guesses so far: " + prevGuesses + "</p>";
 
-    //Modify variable html to include invalid entry statement.
-    if (potentialGuess.indexOf(userGuess) === -1) {
-        html += "<br><h4>Your entry is not a letter.</h4>"
-    }
-
     //Set id game to be html variable.
-    document.querySelector('#game').innerHTML = html;
-
+    document.querySelector("#game").innerHTML = html;
 }
